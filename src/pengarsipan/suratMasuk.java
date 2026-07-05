@@ -10,8 +10,8 @@ import javax.swing.JOptionPane;
  *
  * @author USER
  */
-public class suratMasuk extends suratKeluar {
-    private String noSurat;
+public class suratMasuk extends suratKeluar { 
+    private String noSurat; 
     private String tanggal;
     private String pengirim;
     private String perihal;
@@ -22,14 +22,13 @@ public class suratMasuk extends suratKeluar {
     private ArrayList<String> dataPerihal;
 
     
-public suratMasuk() {
-        dataNoSurat = new ArrayList<>(); //ini array
-        dataTanggal = new ArrayList<>();
-        dataPengirim = new ArrayList<>();
-        dataPerihal = new ArrayList<>();
+public suratMasuk(){
+    dataNoSurat = new ArrayList<>();
+    dataTanggal = new ArrayList<>();
+    dataPengirim = new ArrayList<>();
+    dataPerihal = new ArrayList<>();
 }
     
-
 public suratMasuk(String noSurat, String tanggal, 
         String pengirim, String perihal){
         this.noSurat = noSurat;
@@ -38,6 +37,60 @@ public suratMasuk(String noSurat, String tanggal,
         this.perihal = perihal;
 }
 
+
+public int getIndexData(String data){
+    int index = -1;
+    index = this.dataNoSurat.indexOf(data);
+
+    if(index < 0){
+        JOptionPane.showMessageDialog(null, "Data tidak ditemukan");
+    } else {
+        System.out.println(index);
+    }
+
+    return index;
+}
+
+public void cariDataSuratMasuk(String noSurat){
+    int i = getIndexData(noSurat);
+
+    String tanggal = this.dataTanggal.get(i);
+    String pengirim = this.dataPengirim.get(i);
+    String perihal = this.dataPerihal.get(i);
+
+    String isi = "No Surat : " + noSurat +
+                 "\nTanggal : " + tanggal +
+                 "\nPengirim : " + pengirim +
+                 "\nPerihal : " + perihal;
+
+    JOptionPane.showMessageDialog(null, isi);
+}
+
+public void updateData(int index, String noSurat,
+        String tanggal, String pengirim,
+        String perihal){
+
+    dataNoSurat.set(index, noSurat);
+    dataTanggal.set(index, tanggal);
+    dataPengirim.set(index, pengirim);
+    dataPerihal.set(index, perihal);
+
+}
+
+public void hapusData(int index){
+
+    dataNoSurat.remove(index);
+    dataTanggal.remove(index);
+    dataPengirim.remove(index);
+    dataPerihal.remove(index);
+
+}
+
+public boolean cekNoSurat(String noSurat){
+
+    return dataNoSurat.contains(noSurat);
+
+}
     public void inputNoSurat(String noSurat) {
         this.dataNoSurat.add(noSurat);
     }
@@ -55,7 +108,7 @@ public suratMasuk(String noSurat, String tanggal,
     }
 
 
-    public ArrayList<String> arrayNoSurat(){ //mengembalikan data array
+    public ArrayList<String> arrayNoSurat(){ 
         return this.dataNoSurat;
     }
     public ArrayList<String> arrayTanggal(){
@@ -121,7 +174,7 @@ public void setPerihal(String perihal) {
 }
 
 
-public String getnoSurat(){ //get untuk mendapatkan data.
+public String getNoSurat(){ 
         return this.noSurat;
     }
     public String getTanggal(){

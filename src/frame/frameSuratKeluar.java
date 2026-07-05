@@ -5,6 +5,7 @@
 package frame;
 import javax.swing.table.DefaultTableModel;
 import pengarsipan.suratKeluar;
+import javax.swing.JOptionPane;
 /**
  *
  * @author USER
@@ -13,7 +14,7 @@ public class frameSuratKeluar extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(frameSuratKeluar.class.getName());
     private suratKeluar obj;
-    
+    private int index = -1;
     /**
      * Creates new form frameSuratKeluar
      */
@@ -64,6 +65,11 @@ public class frameSuratKeluar extends javax.swing.JFrame {
         btnSimpan = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTSuratKeluar = new javax.swing.JTable();
+        jLabel1 = new javax.swing.JLabel();
+        btnHapus = new javax.swing.JButton();
+        btnEdit = new javax.swing.JButton();
+        lblFrom2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
 
         btnKeluar.setText("KELUAR");
         btnKeluar.addActionListener(this::btnKeluarActionPerformed);
@@ -81,7 +87,7 @@ public class frameSuratKeluar extends javax.swing.JFrame {
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 600, Short.MAX_VALUE)
+            .addGap(0, 647, Short.MAX_VALUE)
         );
 
         jPanel2.setBackground(new java.awt.Color(204, 204, 204));
@@ -100,7 +106,7 @@ public class frameSuratKeluar extends javax.swing.JFrame {
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Screenshot_2026-04-24_095059-removebg-preview.png"))); // NOI18N
         jLabel2.setText("jLabel2");
 
-        lblFrom.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lblFrom.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblFrom.setText("FORM SURAT KELUAR");
 
         lblNo.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -127,13 +133,15 @@ public class frameSuratKeluar extends javax.swing.JFrame {
         txtPerihal.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         txtPerihal.addActionListener(this::txtPerihalActionPerformed);
 
-        btnKeluar1.setBackground(new java.awt.Color(255, 51, 51));
+        btnKeluar1.setBackground(new java.awt.Color(204, 204, 204));
         btnKeluar1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnKeluar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/frame/keluar.png"))); // NOI18N
         btnKeluar1.setText("KELUAR");
         btnKeluar1.addActionListener(this::btnKeluar1ActionPerformed);
 
-        btnSimpan.setBackground(new java.awt.Color(0, 204, 102));
+        btnSimpan.setBackground(new java.awt.Color(204, 204, 204));
         btnSimpan.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnSimpan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/frame/simpan 2.png"))); // NOI18N
         btnSimpan.setText("SIMPAN");
         btnSimpan.addActionListener(this::btnSimpanActionPerformed);
 
@@ -145,10 +153,35 @@ public class frameSuratKeluar extends javax.swing.JFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "No Surat", "Tanggal", "Tujuan", "Perihal"
             }
         ));
+        jTSuratKeluar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTSuratKeluarMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTSuratKeluar);
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
+        jLabel1.setText("SILAHKAN ISI FORM DIBAWAH!");
+
+        btnHapus.setBackground(new java.awt.Color(204, 204, 204));
+        btnHapus.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnHapus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/frame/hapus 1.png"))); // NOI18N
+        btnHapus.setText("HAPUS");
+        btnHapus.addActionListener(this::btnHapusActionPerformed);
+
+        btnEdit.setBackground(new java.awt.Color(204, 204, 204));
+        btnEdit.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/frame/edit pensil 1.png"))); // NOI18N
+        btnEdit.setText("EDIT");
+        btnEdit.addActionListener(this::btnEditActionPerformed);
+
+        lblFrom2.setFont(new java.awt.Font("Segoe Print", 1, 18)); // NOI18N
+        lblFrom2.setText("SISTEM INFORMASI PENGARSIPAN SURAT");
+
+        jLabel3.setText("_______________________________________________________________________________________________________________________________________________________________");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -157,35 +190,50 @@ public class frameSuratKeluar extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(26, 26, 26)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(btnKeluar1)
-                                .addGap(50, 50, 50)
-                                .addComponent(btnSimpan)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 559, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(lblPerihal, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lblTujuan, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtnoSurat, javax.swing.GroupLayout.DEFAULT_SIZE, 241, Short.MAX_VALUE)
-                                    .addComponent(lblTanggal, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lblNo, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtTanggal)
-                                    .addComponent(txtTujuan)
-                                    .addComponent(txtPerihal))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 382, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(28, 28, 28))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(279, 279, 279)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblFrom, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(23, 23, 23)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addComponent(btnSimpan, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(38, 38, 38)
+                                .addComponent(btnHapus)
+                                .addGap(30, 30, 30)
+                                .addComponent(btnEdit)
+                                .addGap(34, 34, 34)
+                                .addComponent(btnKeluar1)
+                                .addGap(98, 98, 98))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addGap(26, 26, 26)
+                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(54, 54, 54)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblFrom2, javax.swing.GroupLayout.PREFERRED_SIZE, 440, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(135, 135, 135)
+                                        .addComponent(lblFrom))))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addGap(27, 27, 27)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblNo, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(lblPerihal, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(lblTujuan, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(lblTanggal, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                                .addComponent(txtPerihal, javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(txtTujuan, javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(txtTanggal, javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(txtnoSurat, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 373, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addGap(40, 40, 40)))
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
@@ -193,14 +241,22 @@ public class frameSuratKeluar extends javax.swing.JFrame {
             .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addGap(22, 22, 22)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblFrom)
-                .addGap(42, 42, 42)
+                .addGap(20, 20, 20)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(13, 13, 13)
+                        .addComponent(lblFrom2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblFrom)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel3)
+                .addGap(56, 56, 56)
+                .addComponent(jLabel1)
+                .addGap(18, 18, 18)
+                .addComponent(lblNo)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblNo)
                         .addGap(18, 18, 18)
                         .addComponent(txtnoSurat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
@@ -214,13 +270,17 @@ public class frameSuratKeluar extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(lblPerihal)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtPerihal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 283, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(39, 39, 39)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnKeluar1)
-                    .addComponent(btnSimpan))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(txtPerihal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(74, 74, 74)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnSimpan, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnHapus)
+                            .addComponent(btnEdit)
+                            .addComponent(btnKeluar1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(28, 28, 28)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(40, 40, 40))
         );
 
         pack();
@@ -236,18 +296,18 @@ public class frameSuratKeluar extends javax.swing.JFrame {
     }//GEN-LAST:event_txtnoSuratActionPerformed
 
     private void btnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimpanActionPerformed
+        if(obj.cekNoSurat(txtnoSurat.getText())){
+            JOptionPane.showMessageDialog(null,
+            "Nomor surat sudah terdaftar!");
+        return;
+       }
        obj.inputNoSurat(txtnoSurat.getText()); //03 juni 2026
        obj.inputTanggal(txtTanggal.getText());
        obj.inputTujuan(txtTujuan.getText());
        obj.inputPerihal(txtPerihal.getText());
        loadDataSuratKeluar();
+ 
         // TODO add your handling code here:
-        suratKeluar sm = new suratKeluar(
-            txtnoSurat.getText(),
-            txtTanggal.getText(),
-            txtTujuan.getText(),
-            txtPerihal.getText()
-        );
 
         javax.swing.JOptionPane.showMessageDialog(null, "Data berhasil disimpan!");
     }//GEN-LAST:event_btnSimpanActionPerformed
@@ -268,6 +328,79 @@ public class frameSuratKeluar extends javax.swing.JFrame {
     private void txtTanggalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTanggalActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtTanggalActionPerformed
+
+    private void jTSuratKeluarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTSuratKeluarMouseClicked
+    index = jTSuratKeluar.getSelectedRow();
+
+    txtnoSurat.setText(obj.arrayNoSurat().get(index));
+    txtTanggal.setText(obj.arrayTanggal().get(index));
+    txtTujuan.setText(obj.arrayTujuan().get(index));
+    txtPerihal.setText(obj.arrayPerihal().get(index));
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTSuratKeluarMouseClicked
+
+    private void btnHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHapusActionPerformed
+
+        if(index == -1){
+            javax.swing.JOptionPane.showMessageDialog(null,
+                "Pilih data yang ingin dihapus!");
+            return;
+        }
+
+        int jawab = javax.swing.JOptionPane.showConfirmDialog(
+            null,
+            "Yakin ingin menghapus data?",
+            "Konfirmasi",
+            javax.swing.JOptionPane.YES_NO_OPTION);
+
+        if(jawab == javax.swing.JOptionPane.YES_OPTION){
+
+            obj.hapusData(index);
+
+            loadDataSuratKeluar();
+
+            txtnoSurat.setText("");
+            txtTanggal.setText("");
+            txtTujuan.setText("");
+            txtPerihal.setText("");
+
+            index = -1;
+
+            javax.swing.JOptionPane.showMessageDialog(null,
+                "Data berhasil dihapus!");
+
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnHapusActionPerformed
+
+    private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
+        if(obj.cekNoSurat(txtnoSurat.getText())
+            && index != obj.getIndexData(txtnoSurat.getText())){
+
+            JOptionPane.showMessageDialog(null,
+            "Nomor surat sudah digunakan!");
+        return;
+
+}
+        if(index == -1){
+            javax.swing.JOptionPane.showMessageDialog(null,
+                "Pilih data yang ingin diedit!");
+            return;
+        }
+
+        obj.updateData(index,
+            txtnoSurat.getText(),
+            txtTanggal.getText(),
+            txtTujuan.getText(),
+            txtPerihal.getText());
+
+        loadDataSuratKeluar();
+
+        javax.swing.JOptionPane.showMessageDialog(null,
+            "Data berhasil diubah!");
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnEditActionPerformed
 
     /**
      * @param args the command line arguments
@@ -295,15 +428,20 @@ public class frameSuratKeluar extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnEdit;
+    private javax.swing.JButton btnHapus;
     private javax.swing.JButton btnKeluar;
     private javax.swing.JButton btnKeluar1;
     private javax.swing.JButton btnSimpan;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTSuratKeluar;
     private javax.swing.JLabel lblFrom;
+    private javax.swing.JLabel lblFrom2;
     private javax.swing.JLabel lblNo;
     private javax.swing.JLabel lblPerihal;
     private javax.swing.JLabel lblTanggal;
